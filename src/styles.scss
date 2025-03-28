@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+header, section, main {
+    border: 1px solid black;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+h1, h2 {
+    margin-top: 0;
+}

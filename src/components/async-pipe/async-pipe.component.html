@@ -1,0 +1,13 @@
+<section>
+    <h2>Async Pipe</h2>
+    <p>{{getLatestRenderTime()}}</p>
+
+    <div>
+        <div>
+            <button (click)="add()">Add</button>
+        </div>
+        <div>
+            Value: {{ valueSubject | async }}
+        </div>
+    </div>
+</section>

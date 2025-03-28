@@ -1,0 +1,17 @@
+<section>
+    <h2>Change automated change detection timer source</h2>
+    <p>{{getLatestRenderTime()}}</p>
+
+    @for (sourceEntry of sourceOptions; let index = $index; track sourceEntry[0]) {
+        <div>
+            <input
+                    [id]="sourceEntry[1]"
+                    (change)="changeSource(sourceEntry[1])"
+                    type="radio" name="cdSource"
+                    [value]="sourceEntry[1]"
+                    [checked]="index === 0"
+            />
+            <label [for]="sourceEntry[1]">{{sourceEntry[0]}}</label>
+        </div>
+    }
+</section>
