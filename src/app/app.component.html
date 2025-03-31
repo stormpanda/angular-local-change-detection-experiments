@@ -1,12 +1,40 @@
 <main>
-    <header>
+     <section>
         <h1>Angular Local Change Detection Experiments</h1>
         {{getLatestRenderTime()}}
-    </header>
+
+        <h3>Change Detection Mode</h3>
+        <span>
+            <input
+                    id="onPush"
+                    (change)="useOnPushChangeDetection.set(true)"
+                    type="radio"
+                    name="cdMode"
+                    [checked]="useOnPushChangeDetection()"
+            />
+            <label for="onPush">On Push</label>
+        </span>
+        <span>
+            <input
+                    id="default"
+                    (change)="useOnPushChangeDetection.set(false)"
+                    type="radio"
+                    name="cdMode"
+                    [checked]="!useOnPushChangeDetection()"
+            />
+            <label for="default">Default</label>
+        </span>
+    </section>
 
     <section>
-        <app-source-selector />
-        <app-async-pipe />
-        <app-signal />
+        @if (useOnPushChangeDetection()) {
+            <app-source-on-push-cd-selector />
+            <app-async-pipe-on-push-cd />
+            <app-signal-on-push-cd />
+        } @else {
+            <app-source-default-cd-selector />
+            <app-async-pipe-default-cd />
+            <app-signal-default-cd />
+        }
     </section>
 </main>

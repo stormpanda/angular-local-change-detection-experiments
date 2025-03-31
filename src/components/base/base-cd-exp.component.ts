@@ -1,32 +1,35 @@
-import {ChangeDetectionStrategy, Component, inject, PLATFORM_ID, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, NgZone, PLATFORM_ID, signal} from '@angular/core';
 import {isPlatformServer} from "@angular/common";
 import {
     ChangeDetectionSource,
     ChangeDetectionSourceSelectorService
 } from "../../services/change-detection-source-selector.service";
-import {toSignal} from "@angular/core/rxjs-interop";
+import {takeUntilDestroyed, toSignal} from "@angular/core/rxjs-interop";
 import {BaseComponent} from "./base.component";
+import {interval} from "rxjs";
 
 @Component({
     template: '',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export abstract class BaseCdExpComponent extends BaseComponent {
+    ngZone = inject(NgZone);
     platform = inject(PLATFORM_ID)
-    changeDetectionSourceSelectorService = inject(ChangeDetectionSourceSelectorService)
-
-    changeDetectionSource = toSignal(this.changeDetectionSourceSelectorService.source$)
+    changeDetectionSourceSelectorService = inject(ChangeDetectionSourceSelectorService);
+    changeDetectionSource = toSignal(this.changeDetectionSourceSelectorService.source$);
 
     constructor() {
         super();
 
-        if (isPlatformServer(this.platform)) return
+        if (isPlatformServer(this.platform)) return;
 
-        setInterval(()=> {
+        this.ngZone.runOutsideAngular(() => interval(1000).pipe(
+            takeUntilDestroyed()
+        ).subscribe(()=> {
             if (this.changeDetectionSource() === this.getChangeDetectionSource()) {
                 this.add();
             }
-        }, 1000)
+        }))
     }
 
     abstract add(): void;

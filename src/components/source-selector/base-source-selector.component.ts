@@ -1,19 +1,17 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {
   ChangeDetectionSource,
   ChangeDetectionSourceSelectorService
 } from "../../services/change-detection-source-selector.service";
 import {BaseComponent} from "../base/base.component";
+import {toSignal} from "@angular/core/rxjs-interop";
 
 @Component({
-  selector: 'app-source-selector',
-  imports: [],
-  templateUrl: './source-selector.component.html',
-  styleUrl: './source-selector.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: '',
 })
-export class SourceSelectorComponent extends BaseComponent {
+export class BaseSourceSelectorComponent extends BaseComponent {
   changeDetectionSourceSelectorService = inject(ChangeDetectionSourceSelectorService)
+  selectedSource = toSignal(this.changeDetectionSourceSelectorService.source$)
 
   readonly sourceOptions = Object.entries(ChangeDetectionSource);
 
