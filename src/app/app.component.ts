@@ -12,7 +12,7 @@ import {SourceSelectorDefaultCdComponent} from "../components/source-selector/so
   imports: [AsyncPipeOnPushCdComponent, SignalOnPushCdComponent, ReactiveFormsModule, AsyncPipeDefaultCdComponent, SignalDefaultComponent, SourceSelectorOnPushCdComponent, SourceSelectorDefaultCdComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
   useOnPushChangeDetection = signal(true);
